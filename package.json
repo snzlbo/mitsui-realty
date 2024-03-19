@@ -1,0 +1,32 @@
+{
+  "name": "multichat-embed",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "vue-tsc && vite build",
+    "lint": "eslint --fix src/*.{ts,vue} && eslint --fix src/**/*.{ts,vue}",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "markdown-it": "^14.0.0",
+    "pinia": "^2.1.4",
+    "purgecss": "^5.0.0",
+    "vite-plugin-vuetify": "^1.0.2",
+    "vue": "^3.2.47",
+    "vuetify": "^3.3.6"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.0",
+    "@fullhuman/vue-cli-plugin-purgecss": "~5.0.0",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "autoprefixer": "^10.4.16",
+    "cssnano": "^6.0.3",
+    "markdown-it-link-attributes": "^4.0.1",
+    "postcss-import": "^16.0.1",
+    "sass": "^1.63.6",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.9",
+    "vue-tsc": "^1.4.2"
+  }
+}

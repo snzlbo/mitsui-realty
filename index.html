@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Embed</title>
+  </head>
+  <body>
+    <script type="module" src="/src/main.ts"></script>
+    <script>
+      document.body.innerHTML = `<div><div id="multi-chat-embed" style="position: fixed; right: 0; bottom: 0"></div></div>`;
+      window.addEventListener("load", () => {
+        const mugenProps = {
+          mode: "embed",
+          projectId: "c1337093-7036-4fa0-9c67-ef6b63191047",
+          title: "売却サポート　AI チャット​",
+          helloMessage: `はじめまして。「売却サポート AI」です。​不動産売却のご質問にAIがお答えいたします。​ お気軽にご質問をチャット形式で入力してください。​
+
+
+「売却サポート AI」は人口知能を活用したシステムによる自動応答です。​情報の正確性は必ずご利用者様でご確認いただき、ご不明点がございましたら担当営業までお尋ねください。​また個人情報の入力はおやめください。​
+
+
+不動産売却に関連しない情報につきましてはお答えできませんのでご了承ください。​
+
+
+「売却サポート AI」を利用したユーザーは、下記URLに記載の利用規約に同意いただいたものとみなします。
+
+
+https://www.rehouse.co.jp/xxxxxxxxxxxxx`,
+          botAvatar: "mitsui",
+          userAvatar: "",
+          buttonIcon: "send",
+          buttonColor: "#C11926",
+          textAreaColor: "#FFFFFF",
+          buttonIconColor: "#FFFFFF",
+          widgetButtonColor: "#C11926",
+          userColor: "#C11926",
+          botColor: "#F4F5F9",
+          backgroundColor: "#FFFFFF",
+          backgroundImage: "",
+          width: "500",
+          height: "600",
+          apiKey: "CswEpldmbuAU",
+          source: "prod",
+          model: "gpt4",
+        };
+        window.MultiChatEmbed.initialize(mugenProps);
+      });
+    </script>
+  </body>
+</html>

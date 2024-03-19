@@ -1,0 +1,11 @@
+root: 
+  true
+extends: 
+  - "plugin:vue/vue3-recommended"
+  - '@vue/typescript/recommended'
+rules:
+  "import/no-named-as-default-member": 0
+  "array-callback-return": 0
+  "no-prototype-builtins": 0
+  "camelcase": 0
+  "vue/no-v-html": 0
