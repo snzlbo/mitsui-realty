@@ -1,9 +1,9 @@
 {
-  "name": "multichat-embed",
+  "name": "mitsui-stg",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "lint": "eslint --fix src/*.{ts,vue} && eslint --fix src/**/*.{ts,vue}",
     "dev": "vite",
     "preview": "vite preview"
