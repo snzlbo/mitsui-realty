@@ -34,15 +34,9 @@
       </div>
       <div v-for="(chat, index) in chatLogs" :key="index">
         <div class="d-flex" :class="chat.wrapperClass">
-          <div
-            v-if="chat.class === 'bot-chat' && props.botAvatar"
-            class="chat-avatar"
-            :style="
-              props.botAvatar
-                ? { backgroundImage: `url('${props.botAvatar}')` }
-                : ''
-            "
-          />
+          <div v-if="chat.class === 'bot-chat'" class="chat-avatar">
+            <icon-chat />
+          </div>
           <!-- <div
             v-else-if="chat.class === 'user-chat' && props.userAvatar"
             class="chat-avatar user-avatar"
@@ -156,20 +150,26 @@
   </div>
 </template>
 <script>
-import { mapState } from "pinia";
-import { usePropsStore } from "../../store/propsStore";
-import { generateString } from "../../services/generateString";
-import { pickTextColorBasedOnBgColorAdvanced } from "../../services/invertColor";
-import { groupBy } from "../../services/groupBy";
-import HelloMessage from "../Props/HelloMessage.vue";
-import { IconMinimize, IconCancel, IconSend } from "../../assets/icons";
-import { renderMarkdown } from "../../services/markdown.js";
+import { mapState } from 'pinia';
+import { usePropsStore } from '../../store/propsStore';
+import { generateString } from '../../services/generateString';
+import { pickTextColorBasedOnBgColorAdvanced } from '../../services/invertColor';
+import { groupBy } from '../../services/groupBy';
+import HelloMessage from '../Props/HelloMessage.vue';
+import {
+  IconMinimize,
+  IconCancel,
+  IconSend,
+  IconChat,
+} from '../../assets/icons';
+import { renderMarkdown } from '../../services/markdown.js';
 export default {
   components: {
     HelloMessage,
     IconMinimize,
     IconCancel,
     IconSend,
+    IconChat,
   },
   data() {
     return {
@@ -182,13 +182,13 @@ export default {
     };
   },
   computed: {
-    ...mapState(usePropsStore, ["props"]),
+    ...mapState(usePropsStore, ['props']),
   },
   mounted() {
     this.textAreaBackground();
-    window.addEventListener("resize", this.handleResize);
+    window.addEventListener('resize', this.handleResize);
     document.onkeydown = (event) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         this.cancelToken();
       }
     };
@@ -202,7 +202,7 @@ export default {
       if (!this.userInput) {
         return;
       }
-      const history = groupBy(this.chatLogs.slice(0, 6), "index");
+      const history = groupBy(this.chatLogs.slice(0, 6), 'index');
       const conversationId = generateString();
       const userId = generateString(8);
       const index = Math.floor(this.chatLogs.length / 2);
@@ -215,18 +215,18 @@ export default {
       const userInput = this.userInput;
       this.userInput = null;
       this.chatLogs.unshift({
-        wrapperClass: "user-chat-wrapper",
-        class: "user-chat",
+        wrapperClass: 'user-chat-wrapper',
+        class: 'user-chat',
         text: userInput,
         index,
         id: null,
       });
       const models = {
-        gpt3: "gpt-3.5-turbo",
-        gpt4: "gpt-4",
-        palm2: "palm-2",
+        gpt3: 'gpt-3.5-turbo',
+        gpt4: 'gpt-4',
+        palm2: 'palm-2',
       };
-      const propsModel = this.props?.model || "gpt3";
+      const propsModel = this.props?.model || 'gpt3';
       const query = {
         project_id: this.props.projectId,
         user_id: userId,
@@ -234,8 +234,8 @@ export default {
         frequency_penalty: 0,
         history: logs,
         max_length: 2048,
-        model: models[propsModel] || "gpt-3.5-turbo",
-        platform: "Widget",
+        model: models[propsModel] || 'gpt-3.5-turbo',
+        platform: 'Widget',
         presence_penalty: 0,
         question: userInput,
         temperature: 0,
@@ -244,20 +244,20 @@ export default {
       this.controller = new AbortController();
 
       const sources = {
-        dev: "https://beta.multi-chat.data-artist.info",
-        stg: "https://test.multi-chat.data-artist.info",
-        prod: "https://mugen-ai-chat.jp",
+        dev: 'https://beta.multi-chat.data-artist.info',
+        stg: 'https://test.multi-chat.data-artist.info',
+        prod: 'https://mugen-ai-chat.jp',
       };
-      const propsSource = this.props?.source || "prod";
-      const source = sources[propsSource] || "https://mugen-ai-chat.jp";
+      const propsSource = this.props?.source || 'prod';
+      const source = sources[propsSource] || 'https://mugen-ai-chat.jp';
       const response = await fetch(`${source}/be/answer`, {
-        method: "POST",
+        method: 'POST',
         signal: this.controller.signal,
         headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "no-cache",
-          Connection: "keep-alive",
-          "X-API-KEY": this.props.apiKey,
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          Connection: 'keep-alive',
+          'X-API-KEY': this.props.apiKey,
         },
         body: JSON.stringify(query),
       });
@@ -268,10 +268,10 @@ export default {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let done = false;
-      let msgFull = "";
+      let msgFull = '';
       this.chatLogs.unshift({
-        wrapperClass: "bot-chat-wrapper",
-        class: "bot-chat",
+        wrapperClass: 'bot-chat-wrapper',
+        class: 'bot-chat',
         text: msgFull,
         index,
         id: null,
@@ -282,7 +282,7 @@ export default {
         const chunkValue = decoder.decode(value);
         msgFull += chunkValue;
         this.chatLogs.find(
-          (chat) => chat.class === "bot-chat" && chat.index === index
+          (chat) => chat.class === 'bot-chat' && chat.index === index
         ).text = msgFull;
       }
       this.conversationLoading = false;
@@ -303,18 +303,18 @@ export default {
       this.sendChat();
     },
     handleClose() {
-      this.$emit("close");
+      this.$emit('close');
     },
     handleResize() {
       this.isMobile = window.innerWidth <= 767;
     },
     textAreaBackground() {
-      const textArea = document.getElementById("textarea");
+      const textArea = document.getElementById('textarea');
       if (textArea) {
         const textColor = pickTextColorBasedOnBgColorAdvanced(
           this.props.textAreaColor,
-          "#FFFFFF",
-          "#000000"
+          '#FFFFFF',
+          '#000000'
         );
         textArea.style.color = textColor;
       }

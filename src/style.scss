@@ -128,10 +128,15 @@
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url("./assets/images/bot.png");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #C11926;
+    color:#fff;
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // background-position: center;
+    // background-image: url("./assets/images/bot.png");
   }
   .user-avatar {
     background-image: url("./assets/images/user.png");

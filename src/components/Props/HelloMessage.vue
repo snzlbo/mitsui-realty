@@ -1,15 +1,9 @@
 <template>
   <div>
     <div class="d-flex bot-chat-wrapper">
-      <div
-        v-if="props.botAvatar"
-        class="chat-avatar"
-        :style="
-          props.botAvatar
-            ? { backgroundImage: `url('${props.botAvatar}')` }
-            : ''
-        "
-      />
+      <div class="chat-avatar">
+        <icon-chat />
+      </div>
       <div
         class="bot-chat"
         :style="{
@@ -27,21 +21,26 @@
   </div>
 </template>
 <script>
-import { mapState } from "pinia";
-import { usePropsStore } from "../../store/propsStore";
-import { pickTextColorBasedOnBgColorAdvanced } from "../../services/invertColor";
-import { renderMarkdown } from "../../services/markdown.js";
+import { mapState } from 'pinia';
+import { usePropsStore } from '../../store/propsStore';
+import { pickTextColorBasedOnBgColorAdvanced } from '../../services/invertColor';
+import { renderMarkdown } from '../../services/markdown.js';
+import { IconChat } from '../../assets/icons';
+
 export default {
   props: {
     message: {
       type: String,
       default() {
-        return "";
+        return '';
       },
     },
   },
+  components: {
+    IconChat,
+  },
   computed: {
-    ...mapState(usePropsStore, ["props"]),
+    ...mapState(usePropsStore, ['props']),
   },
   methods: {
     pickTextColorBasedOnBgColorAdvanced,
